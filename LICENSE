@@ -1,0 +1,50 @@
+CYBER TRACE PAD — ファームウェア ソースコード
+
+Copyright (c) 2026 SUILAB. All rights reserved.
+
+
+■ 公開の趣旨
+
+本ソースコードは、GNU 劣等一般公衆利用許諾契約書 バージョン 2.1
+(LGPL-2.1) でライセンスされた megaTinyCore と結合して使用されています。
+同ライセンスが求める「利用者がライブラリを改変して再リンクできる状態」を
+満たすために公開しているものです。
+
+
+■ 許諾する範囲
+
+本製品の購入者および本ソースコードの入手者に対し、以下を許諾します。
+
+  1. 自身の使用のために本ソフトウェアを改変すること
+  2. その改変をデバッグする目的でリバースエンジニアリングを行うこと
+  3. 改変した megaTinyCore と再リンクし、自身の機器で使用すること
+
+上記以外の権利は著作権者が留保します。特に、複製物の再配布、および
+本ソフトウェアまたはその派生物を組み込んだ製品の製造・販売は許諾して
+いません。これらをご希望の場合は個別にご相談ください。
+
+
+■ 無保証
+
+本ソフトウェアは現状有姿で提供され、明示・黙示を問わずいかなる保証も
+ありません。本ソフトウェアの使用により生じたいかなる損害についても、
+著作権者は責任を負いません。
+
+
+---
+
+■ 使用しているオープンソースソフトウェア
+
+  megaTinyCore v2.6.11 (コアおよび Wire ライブラリを含む)
+  Copyright (c) 2018-2023 Spence Konde and contributors
+  Wire: Copyright (c) 2006 Nicholas Zambetti、
+        Todd Krein、Chuck Todd、Spence Konde、MX682X による改変
+  コア: Arduino (Copyright (c) 2005-2006 David A. Mellis) に由来し、
+        megaTinyCore 向けに改変されたもの
+
+  Licensed under LGPL-2.1
+  https://github.com/SpenceKonde/megaTinyCore
+
+  LGPL-2.1 全文:
+  https://github.com/SpenceKonde/megaTinyCore/blob/master/LICENSE.md
+  https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
