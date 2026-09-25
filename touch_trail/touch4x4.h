@@ -189,9 +189,26 @@ static bool touchPos(int16_t *fx, int16_t *fy) {
   static bool on = false;
   static uint8_t  onCnt = 0;
   static uint16_t onFrames = 0;
-  int16_t mr = 0, mc = 0;
-  for (uint8_t i = 0; i < 4; i++) if (tDelta[i]     > mr) mr = tDelta[i];
-  for (uint8_t i = 0; i < 4; i++) if (tDelta[4 + i] > mc) mc = tDelta[4 + i];
+  // Gate on PROMINENCE (peak minus the per-axis floor), not the raw maximum:
+  // without a holding hand to ground the board, a nearby palm or mains hum
+  // lifts all electrodes together, and that common-mode lift must not count
+  // as a touch — a real finger stands out of its axis floor. The floor is
+  // clamped at 0 so a negative outlier cannot inflate the prominence (the
+  // gate is never looser than a raw-maximum one). Same floor definition as
+  // axisPos(); operates on the raw per-frame tDelta, upstream of all
+  // smoothing.
+  int16_t mr = tDelta[0], fr = tDelta[0];
+  int16_t mc = tDelta[4], fc = tDelta[4];
+  for (uint8_t i = 1; i < 4; i++) {
+    if (tDelta[i]     > mr) mr = tDelta[i];
+    if (tDelta[i]     < fr) fr = tDelta[i];
+    if (tDelta[4 + i] > mc) mc = tDelta[4 + i];
+    if (tDelta[4 + i] < fc) fc = tDelta[4 + i];
+  }
+  if (fr < 0) fr = 0;
+  if (fc < 0) fc = 0;
+  mr -= fr;                                  // per-axis prominence
+  mc -= fc;
   int16_t m = (mr < mc) ? mr : mc;
   if (on ? (m < TOUCH_KEEP) : (m < TOUCH_THRESHOLD)) {
     on = false; onCnt = 0; onFrames = 0;

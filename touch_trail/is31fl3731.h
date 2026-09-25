@@ -140,6 +140,12 @@ static void is31Recover() {
   Wire.swap(1);
   Wire.begin();
   Wire.setClock(400000);
+  // Clear the TWI master's sticky error flags (write-1-to-clear). Wire never
+  // clears ARBLOST, and masterTransmit() returns TWI_ERR_BUS_ARB *before*
+  // writing MADDR (which would clear it), so a single noise-induced ARBLOST
+  // fails every later transaction; Wire.end()/begin() only force BUSSTATE.
+  TWI0.MSTATUS = TWI_RIF_bm | TWI_WIF_bm | TWI_ARBLOST_bm | TWI_BUSERR_bm |
+                 TWI_BUSSTATE_IDLE_gc;
   is31Refresh();
   is31Err = 0;
 }
